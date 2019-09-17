@@ -90,19 +90,11 @@ export default {
         }
       }
     },
-    drop(action, index) {
-      if (action === 'up') {
-        if (this.playList[index - 1]) {
-          const temp = this.playList[index];
-          this.playList.splice(index, 1);
-          this.playList.splice(index - 1, 0, temp);
-        }
-      } else if (action === 'down') {
-        if (this.playList[index + 1]) {
-          const temp = this.playList[index];
-          this.playList.splice(index, 1);
-          this.playList.splice(index + 1, 0, temp);
-        }
+    drop(value, index) {
+      if (this.playList[index + value]) {
+        const temp = this.playList[index];
+        this.playList.splice(index, 1);
+        this.playList.splice(index + value, 0, temp);
       }
     },
     addVideo() {

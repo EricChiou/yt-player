@@ -57,10 +57,10 @@ export default {
       this.removeVideo(this.index);
     },
     dropUp() {
-      this.drop('up', this.index);
+      this.drop(-1, this.index);
     },
     dropDown() {
-      this.drop('down', this.index);
+      this.drop(1, this.index);
     }
   }
 };
