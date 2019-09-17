@@ -4,12 +4,25 @@
       <img :src="video.snippet.thumbnails.default.url" />
       <div v-if="index===currentIndex" class="playing">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-          <path d="M8 5v14l11-7z" fill="#ff0000"/>
+          <path d="M8 5v14l11-7z" fill="#ff0000" />
           <path d="M0 0h24v24H0z" fill="none" />
         </svg>
       </div>
     </div>
     <div class="title">{{video.snippet.title}}</div>
+    <div class="mask"></div>
+    <div class="drop-up" @click.stop="dropUp">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path d="M8 5v14l11-7z" fill="#ffffff" />
+        <path d="M0 0h24v24H0z" fill="none" />
+      </svg>
+    </div>
+    <div class="drop-down" @click.stop="dropDown">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path d="M8 5v14l11-7z" fill="#ffffff" />
+        <path d="M0 0h24v24H0z" fill="none" />
+      </svg>
+    </div>
     <div class="remove" @click.stop="remove">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
         <path
@@ -19,7 +32,6 @@
         <path d="M0 0h24v24H0z" fill="none" />
       </svg>
     </div>
-    <div class="mask"></div>
   </div>
 </template>
 
@@ -33,7 +45,8 @@ export default {
     currentIndex: Number,
     video: Object,
     playVideo: Function,
-    removeVideo: Function
+    removeVideo: Function,
+    drop: Function
   },
   methods: {
     play() {
@@ -42,6 +55,12 @@ export default {
     },
     remove() {
       this.removeVideo(this.index);
+    },
+    dropUp() {
+      this.drop('up', this.index);
+    },
+    dropDown() {
+      this.drop('down', this.index);
     }
   }
 };
@@ -51,6 +70,7 @@ export default {
 #play-block {
   position: relative;
   margin-bottom: 3px;
+  padding-left: 20px;
   cursor: pointer;
   .cover,
   .title {
@@ -85,7 +105,7 @@ export default {
     top: 0;
     right: 25px;
     bottom: 0;
-    left: 0;
+    left: 20px;
     background-color: rgba(0, 0, 0, 0.25);
   }
 
@@ -103,6 +123,38 @@ export default {
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .drop-up,
+  .drop-down {
+    position: absolute;
+    left: 0;
+    width: 20px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.25);
+    svg {
+      display: block;
+      margin-top: 5px;
+      width: 20px;
+      height: 20px;
+    }
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .drop-up {
+    top: 0;
+    svg {
+      transform: rotate(-90deg);
+    }
+  }
+
+  .drop-down {
+    bottom: 0;
+    svg {
+      transform: rotate(90deg);
     }
   }
 
