@@ -336,7 +336,7 @@ export default {
   left: 0;
 
   .video-list {
-    max-height: calc(100% - 123px);
+    max-height: calc(100% - 126px);
     overflow: auto;
   }
 }
@@ -358,7 +358,7 @@ export default {
   z-index: 999;
 
   .video-list {
-    max-height: calc(100% - 73px);
+    max-height: calc(100% - 76px);
     overflow: auto;
   }
 }
