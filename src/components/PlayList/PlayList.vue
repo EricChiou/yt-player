@@ -95,6 +95,11 @@ export default {
         const temp = this.playList[index];
         this.playList.splice(index, 1);
         this.playList.splice(index + value, 0, temp);
+        if (this.index === index) {
+          this.index = index + value;
+        } else if (this.index === index + value) {
+          this.index = index;
+        }
       }
     },
     addVideo() {
