@@ -14,7 +14,18 @@
       <input ref="videoId" placeholder="Video ID" />
       <button class="add-video" @click="addVideo">+</button>
     </div>
-    <div class="title">播放列表</div>
+    <div class="title">
+      <span class="text">播放列表</span>
+      <span :class="{repeat: true, on: repeat ? true : false}" @click="repeat=!repeat">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M0 0h24v24H0z" fill="none" />
+          <path
+            d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"
+            fill="currentColor"
+          />
+        </svg>
+      </span>
+    </div>
     <div class="video-list">
       <PlayBlock
         v-for="(video, i) in playList"
@@ -59,7 +70,8 @@ export default {
     playList: [],
     index: null,
     onLoading: false,
-    showMenu: false
+    showMenu: false,
+    repeat: false
   }),
   methods: {
     playVideo(index) {
@@ -118,6 +130,11 @@ export default {
         this.index++;
         if (this.playList[this.index]) {
           PlayHub.playVideo(this.playList[this.index]);
+        } else {
+          if (this.repeat && this.playList[0]) {
+            this.index = 0;
+            PlayHub.playVideo(this.playList[this.index]);
+          }
         }
       }
     });
@@ -229,6 +246,26 @@ export default {
   .title {
     padding: 3px 5px;
     font-size: 16px;
+    .text {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .repeat {
+      display: inline-block;
+      vertical-align: middle;
+      cursor: pointer;
+
+      svg {
+        display: block;
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .on {
+      color: #e84545;
+    }
   }
 
   .video-list {

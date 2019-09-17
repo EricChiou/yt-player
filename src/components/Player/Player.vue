@@ -17,9 +17,6 @@ export default {
   data: () => ({
     PlayHubSubscriber: null,
     player: null,
-    onPlayerReady() {
-      // console.log('onPlayerReady');
-    },
     onPlayerStateChange(e) {
       // console.log('onPlayerStateChange', e);
       if (e.data === 0) {
@@ -27,20 +24,31 @@ export default {
       }
     }
   }),
-  mounted() {
-    if (window.YT && window.YT.Player) {
-      this.player = new window.YT.Player('yt-player', {
-        width: '100%',
-        height: '100%',
-        events: {
-          onReady: this.onPlayerReady,
-          onStateChange: this.onPlayerStateChange
-        }
-      });
+  methods: {
+    init(callBack = () => {}) {
+      if (window.YT && window.YT.Player) {
+        this.player = new window.YT.Player('yt-player', {
+          width: '100%',
+          height: '100%',
+          events: {
+            onReady: callBack,
+            onStateChange: this.onPlayerStateChange
+          }
+        });
+      }
     }
+  },
+  mounted() {
+    this.init();
     this.PlayHubSubscriber = PlayHub.getSubject().subscribe(data => {
       if (data.action === 'play_video') {
-        this.player.loadVideoById(data.video.id.videoId);
+        if (!this.player || !this.player.loadVideoById) {
+          this.init(() => {
+            this.player.loadVideoById(data.video.id.videoId);
+          });
+        } else {
+          this.player.loadVideoById(data.video.id.videoId);
+        }
       }
     });
   },
@@ -61,6 +69,7 @@ export default {
     right: 0;
     bottom: 0;
     left: 0;
+    background-color: #000000;
     iframe {
       display: block;
     }
