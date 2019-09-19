@@ -284,6 +284,31 @@ export default {
   .video-list {
     padding: 3px 5px 0 5px;
     box-shadow: inset 0px 0px 2px 0px rgba(0, 0, 0, 0.2);
+
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #bababa;
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #909090;
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #787878;
+    }
+
+    scrollbar-color: #909090 #bababa;
+    scrollbar-width: thin;
+
+    &:hover {
+      scrollbar-color: #787878 #bababa;
+    }
   }
 
   .footer {
