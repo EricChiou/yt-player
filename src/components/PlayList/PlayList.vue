@@ -55,6 +55,8 @@
 import { getVideoById } from '@/api/search.js';
 import ListHub from '@/service/list.js';
 import PlayHub from '@/service/play.js';
+import Cookie from '@/service/cookie.js';
+import Cons from '@/util/constants.js';
 import PlayBlock from '@/components/PlayList/PlayBlock/PlayBlock.vue';
 
 export default {
@@ -129,9 +131,43 @@ export default {
     },
     toggleMenu() {
       this.showMenu = !this.showMenu;
+    },
+    getPlayListFromCookie() {
+      const cookie = Cookie.get(Cons.cookieName);
+      if (cookie) {
+        try {
+          const ids = JSON.parse(cookie);
+
+          if (Array.isArray(ids) && ids.length) {
+            let idsStr = '';
+            ids.forEach(id => {
+              idsStr += `${id},`;
+            });
+            idsStr = idsStr.slice(0, -1);
+            this.onLoading = true;
+            getVideoById(idsStr).then(response => {
+              if (response.status === 200) {
+                if (response.data.items.length) {
+                  const videos = response.data.items.map(video => {
+                    video.id = { videoId: video.id };
+                    return video;
+                  });
+                  // console.log(videos);
+                  videos.forEach(video => {
+                    this.playList.push(video);
+                  });
+                }
+              }
+              this.onLoading = false;
+            });
+          }
+        } catch (error) {}
+      }
     }
   },
   mounted() {
+    this.getPlayListFromCookie();
+
     this.ListHubSubscriber = ListHub.getSubject().subscribe(data => {
       if (data.action === 'add_video') {
         // console.log(data.video);
@@ -151,6 +187,16 @@ export default {
         }
       }
     });
+
+    window.onbeforeunload = () => {
+      const ids = [];
+      this.playList.forEach(video => {
+        if (video.id && video.id.videoId) {
+          ids.push(video.id.videoId);
+        }
+      });
+      Cookie.set(Cons.cookieName, JSON.stringify(ids), 365);
+    };
   },
   beforeDestroy() {
     if (this.ListHubSubscriber) {
