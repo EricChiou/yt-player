@@ -14,7 +14,8 @@ export const getTrendingVideo = (pageToken) => {
 
   return axios.get('https://www.googleapis.com/youtube/v3/videos',
     {
-      params: params
+      params: params,
+      withCredentials: true
     }
   );
 };
@@ -32,7 +33,8 @@ export const searchVideo = (keyword, pageToken) => {
 
   return axios.get('https://www.googleapis.com/youtube/v3/search',
     {
-      params: params
+      params: params,
+      withCredentials: true
     }
   );
 };
@@ -46,7 +48,8 @@ export const getVideoById = (videoId) => {
 
   return axios.get('https://www.googleapis.com/youtube/v3/videos',
     {
-      params: params
+      params: params,
+      withCredentials: true
     }
   );
 };
