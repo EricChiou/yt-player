@@ -1,5 +1,5 @@
 # yt-player
-https://www.calicomoo.ml/yt-player/  
+demo: https://www.calicomoo.ml/yt-player/  
 目前熱門影片搜尋僅支援台灣地區  
 
 ## Project setup
