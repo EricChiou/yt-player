@@ -1,9 +1,7 @@
 import axios from 'axios';
 
 const apiKey = 'AIzaSyDNtjkWngssbHZ8QUgfiSIHTMA6eqxjJcQ';
-const headers = {
-  // 'Access-Control-Allow-Credentials': true,
-};
+const headers = {};
 
 export const getTrendingVideo = (pageToken) => {
   const params = {
