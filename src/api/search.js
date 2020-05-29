@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const apiKey = 'AIzaSyDNtjkWngssbHZ8QUgfiSIHTMA6eqxjJcQ';
 const headers = {
-  'Access-Control-Allow-Credentials': true,
+  // 'Access-Control-Allow-Credentials': true,
 };
 
 export const getTrendingVideo = (pageToken) => {
@@ -19,7 +19,7 @@ export const getTrendingVideo = (pageToken) => {
     {
       headers,
       params: params,
-      withCredentials: true
+      // withCredentials: true
     }
   );
 };
@@ -39,7 +39,7 @@ export const searchVideo = (keyword, pageToken) => {
     {
       headers,
       params: params,
-      withCredentials: true
+      // withCredentials: true
     }
   );
 };
@@ -55,7 +55,7 @@ export const getVideoById = (videoId) => {
     {
       headers,
       params: params,
-      withCredentials: true
+      // withCredentials: true
     }
   );
 };
