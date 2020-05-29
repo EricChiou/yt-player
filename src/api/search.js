@@ -1,6 +1,9 @@
 import axios from 'axios';
 
 const apiKey = 'AIzaSyDNtjkWngssbHZ8QUgfiSIHTMA6eqxjJcQ';
+const headers = {
+  'Access-Control-Allow-Credentials': true,
+};
 
 export const getTrendingVideo = (pageToken) => {
   const params = {
@@ -14,6 +17,7 @@ export const getTrendingVideo = (pageToken) => {
 
   return axios.get('https://www.googleapis.com/youtube/v3/videos',
     {
+      headers,
       params: params,
       withCredentials: true
     }
@@ -33,6 +37,7 @@ export const searchVideo = (keyword, pageToken) => {
 
   return axios.get('https://www.googleapis.com/youtube/v3/search',
     {
+      headers,
       params: params,
       withCredentials: true
     }
@@ -48,6 +53,7 @@ export const getVideoById = (videoId) => {
 
   return axios.get('https://www.googleapis.com/youtube/v3/videos',
     {
+      headers,
       params: params,
       withCredentials: true
     }
