@@ -19,7 +19,6 @@ export const getTrendingVideo = (pageToken) => {
     {
       headers,
       params: params,
-      // withCredentials: true
     }
   );
 };
@@ -39,7 +38,6 @@ export const searchVideo = (keyword, pageToken) => {
     {
       headers,
       params: params,
-      // withCredentials: true
     }
   );
 };
@@ -55,7 +53,6 @@ export const getVideoById = (videoId) => {
     {
       headers,
       params: params,
-      // withCredentials: true
     }
   );
 };
