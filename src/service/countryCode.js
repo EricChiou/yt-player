@@ -6,8 +6,8 @@ export const getCountryCode = () => {
     getIP().then((resp) => {
       if (resp.status === 200) {
         const data = resp.data;
-        if (data.status === 'success') {
-          resolve(data.countryCode);
+        if (data.ip.country_code) {
+          resolve(data.ip.country_code);
         } else {
           resolve('US');
         }
