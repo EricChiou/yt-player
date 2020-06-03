@@ -11,7 +11,17 @@
           <path d="M0 0h24v24H0z" fill="none" />
         </svg>
       </button>
-      <input id="keyword" placeholder="搜尋" @keydown="searchNewKeyword" />
+      <input id="keyword" placeholder="search" @keydown="onKeyDown" />
+      <button class="search" @click="searchNewKeyword">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26">
+          <path d="M0 0h24v24H0z" fill="none" />
+          <path
+            :d="`M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3
+            9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01
+            14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z`"
+          />
+        </svg>
+      </button>
       <button class="wide-mode" @click="change2Wide">
         <svg width="26" height="26" xmlns="http://www.w3.org/2000/svg">
           <line x1="3" y1="6.5" x2="3" y2="18.5" stroke-width="2" stroke="#000" />
@@ -34,7 +44,7 @@
     <div class="search-result">
       <div class="result-text">{{searchType}}</div>
       <VideoBlock v-for="(video, i) in videoList" :key="i" :video="video"></VideoBlock>
-      <div v-if="onLoading" class="loading">Loading...</div>
+      <div v-show="onLoading" class="loading">Loading...</div>
     </div>
   </div>
 </template>
@@ -57,31 +67,38 @@ export default {
     nextPageToken: null,
     videoList: [],
     keyword: null,
-    searchType: '熱門影片'
+    searchType: 'Trending Videos'
   }),
   methods: {
     searchNewTrending() {
       if (this.onLoading) {
         return;
       }
-      this.searchType = '熱門影片';
+      this.searchType = 'Trending Videos';
       this.videoList = [];
       this.keyword = null;
       this.nextPageToken = null;
       this.searchTrending();
     },
-    searchNewKeyword(e) {
+    onKeyDown(e) {
       if (e.key === 'Enter' || e.keyCode === 13) {
-        if (this.onLoading) {
-          return;
-        }
-
-        this.searchType = '搜尋結果';
-        this.videoList = [];
-        this.keyword = e.target.value;
-        this.nextPageToken = null;
-        this.search(this.keyword);
+        this.searchNewKeyword();
       }
+    },
+    searchNewKeyword() {
+      if (this.onLoading) {
+        return;
+      }
+
+      this.keyword = document.getElementById('keyword').value;
+      if (!this.keyword) {
+        return;
+      }
+
+      this.searchType = 'Search Result';
+      this.videoList = [];
+      this.nextPageToken = null;
+      this.search(this.keyword);
     },
     searchMore() {
       if (this.onLoading) {
@@ -95,7 +112,8 @@ export default {
     },
     search(keyword, nextPageToken) {
       this.onLoading = true;
-      searchVideo(keyword, nextPageToken).then(response => {
+      const countryCode = this.$store.state.countryCode;
+      searchVideo(keyword, nextPageToken, countryCode).then(response => {
         if (response.status === 200) {
           response.data.items.forEach(video => {
             this.videoList.push(video);
@@ -107,7 +125,8 @@ export default {
     },
     searchTrending(nextPageToken) {
       this.onLoading = true;
-      getTrendingVideo(nextPageToken).then(response => {
+      const countryCode = this.$store.state.countryCode;
+      getTrendingVideo(nextPageToken, countryCode).then(response => {
         if (response.status === 200) {
           // console.log(response.data.items);
           response.data.items.forEach(video => {
@@ -158,13 +177,27 @@ export default {
       }
     }
 
+    .search {
+      margin: 0 0 0 -1px;
+      float: left;
+      padding: 0;
+      height: 30px;
+
+      svg {
+        display: block;
+      }
+    }
+
     #keyword {
       float: left;
       padding: 3px 5px 1px 5px;
       width: 265px;
       height: 22px;
       font-size: 18px;
-      max-width: 320px;
+
+      @include breakpoint(m) {
+        width: 235px;
+      }
     }
 
     .narrow-mode,

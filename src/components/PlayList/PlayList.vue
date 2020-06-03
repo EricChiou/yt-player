@@ -15,7 +15,7 @@
       <button class="add-video" @click="addVideo">+</button>
     </div>
     <div class="title">
-      <span class="text">播放列表</span>
+      <span class="text">Play List</span>
       <span :class="{repeat: true, on: repeat ? true : false}" @click="repeat=!repeat">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
           <path d="M0 0h24v24H0z" fill="none" />

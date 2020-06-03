@@ -3,12 +3,12 @@ import axios from 'axios';
 const apiKey = 'AIzaSyDNtjkWngssbHZ8QUgfiSIHTMA6eqxjJcQ';
 const headers = {};
 
-export const getTrendingVideo = (pageToken) => {
+export const getTrendingVideo = (pageToken, regionCode) => {
   const params = {
     part: 'snippet',
     chart: 'mostPopular',
     maxResults: 20,
-    regionCode: 'TW',
+    regionCode: regionCode,
     key: apiKey
   };
   if (pageToken) { params.pageToken = pageToken; }
@@ -21,12 +21,12 @@ export const getTrendingVideo = (pageToken) => {
   );
 };
 
-export const searchVideo = (keyword, pageToken) => {
+export const searchVideo = (keyword, pageToken, regionCode) => {
   const params = {
     part: 'snippet',
     q: keyword,
     maxResults: 20,
-    regionCode: 'TW',
+    regionCode: regionCode,
     type: 'video',
     key: apiKey
   };

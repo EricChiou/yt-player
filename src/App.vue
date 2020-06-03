@@ -1,8 +1,25 @@
 <template>
   <div id="app">
-    <router-view />
+    <router-view v-if="init" />
   </div>
 </template>
+
+<script>
+import { getCountryCode } from '@/service/countryCode.js';
+
+export default {
+  name: 'app',
+  data: () => ({
+    init: false
+  }),
+  mounted() {
+    getCountryCode().then(resp => {
+      this.$store.dispatch('setCountryCode', resp);
+      this.init = true;
+    });
+  }
+};
+</script>
 
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap');
