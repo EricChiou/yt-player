@@ -39,7 +39,7 @@
       ></PlayBlock>
     </div>
     <div class="footer">
-      <a href="http://www.calicomoo.ml/entrance/" target="_blank">入口網站</a>
+      <a href="http://www.calicomoomoo.ml/entrance/" target="_blank">入口網站</a>
       <span class="vertical-line">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
       <a href="https://github.com/EricChiou/yt-player" target="_blank">
         <img src="../../assets/img/github.png" width="20" height="20" /> Github
