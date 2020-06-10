@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="add">
-      <input ref="videoId" placeholder="Video ID" />
+      <input ref="videoId" placeholder="URL / Video ID" />
       <button class="add-video" @click="addVideo">+</button>
     </div>
     <div class="title">
@@ -112,7 +112,26 @@ export default {
         return;
       }
       this.onLoading = true;
-      getVideoById(this.$refs.videoId.value).then(response => {
+      let videoId = '';
+      const strAry = this.$refs.videoId.value.split('?');
+      if (strAry.length > 1) {
+        const search = strAry[1];
+        const kvStrAry = search.split('&');
+        kvStrAry.forEach((kvStr) => {
+          const kv = kvStr.split('=');
+          if (kv[0] === 'v') {
+            videoId = kv[1];
+          }
+        });
+      } else {
+        videoId = this.$refs.videoId.value;
+      }
+
+      if (!videoId) {
+        return;
+      }
+
+      getVideoById(videoId).then(response => {
         if (response.status === 200) {
           if (response.data.items.length) {
             this.$refs.videoId.value = '';
