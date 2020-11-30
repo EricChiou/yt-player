@@ -1,5 +1,5 @@
 <template>
-  <div id="player" :class="mode">
+  <div ref="player" id="player" :class="mode">
     <div class="player-container">
       <div id="yt-player"></div>
     </div>
@@ -36,6 +36,14 @@ export default {
           }
         });
       }
+    },
+    calcHeight() {
+      if (this.mode === 'narrow' && this.$refs.player.clientHeight > (window.innerHeight - 50)) {
+        this.$refs.player.style.height = 'calc(100vh - 50px)';
+        this.$refs.player.style.paddingTop = '0';
+      } else {
+        this.$refs.player.removeAttribute('style');
+      }
     }
   },
   mounted() {
@@ -51,6 +59,13 @@ export default {
         }
       }
     });
+    window.addEventListener('resize', () => {
+      this.calcHeight();
+    });
+    this.calcHeight();
+  },
+  updated() {
+    this.calcHeight();
   },
   beforeDestroy() {
     if (this.PlayHubSubscriber) {
