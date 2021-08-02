@@ -1,6 +1,6 @@
 # yt-player
 Please see https://github.com/EricChiou/yt-player-v2<br/>
-Demo: https://www.calicomoomoo.ml/yt-player/
+Demo: https://www.calicomoomoo.com/yt-player/
 
 ## Project setup
 ```
